@@ -1,0 +1,7 @@
+[package]
+name = "enumerator"
+version = "0.1.0"
+authors = ["Jared Roesch <roeschinc@gmail.com>"]
+
+[dependencies]
+num = "*"
