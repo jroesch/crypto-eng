@@ -1,1 +1,73 @@
 \section{Vrypto}
+
+In this section we describe the current state of our prototype framework Vrypto
+a portmanteau of Verified Crypto. Our framework is designed as an
+embedded domain specific language of bits and sequences. We use a
+a technique called parametric higher order abstract syntax in order
+to represent variable binding, and we paramertrize our term language by both
+the varible binder and type of expression, this means our programs are type
+correct by construction, so any term we build is guarenteed to be correctly typed.
+
+Our type system for the language currently supporting bits, sized sequences,
+arbitrary sized integers and functions.
+
+\begin{verbatim}
+inductive ctype : Type :=
+    | Unit     : ctype
+    | Bit      : ctype
+    | Sequence : forall (n : nat) (a : ctype), ctype
+    | Fn       : ctype -> ctype -> ctype
+\end{verbatim}
+
+This type language seems simplistic but actually captures most of the interesting
+behavior we need. We can easily define more complex types for example numbers
+just become sequences of bits.
+
+\begin{verbatim}
+definition Number (n : nat) : ctype :=
+    Sequence (divide n 2) a
+\end{verbatim}
+
+Our main language supports the definition and use of functions, streams, and bits.
+We can use these simple pieces to write relatively complex programs, as well
+as reason about program behavior. The encoding we use makes it possible to
+define transforms simply as recursive functions over the tree structure. We
+can also utilize proofs of equality to prove the equivalence of programs,
+and thus algorithms.
+
+\begin{verbatim}
+variable {var : ctype -> Type}
+
+inductive crypto : ctype -> Type :=
+    | One  : crypto Bit
+    | Zero : crypto Bit
+    | Num  : forall {n}, crypto (Number n)
+    | Empty : forall {c : ctype},
+                crypto (Sequence zero c)
+    | Cons : forall {n} {c : ctype},
+                crypto c ->
+                crypto (Sequence n c) ->
+                crypto (Sequence (succ n) c)
+    | Var  : forall {t}, var t -> crypto t
+    | Abs  : forall {domain range},
+                (var domain -> crypto range) ->
+                crypto (Fn domain range)
+    | App  : forall{domain range},
+                crypto (Fn domain range) ->
+                crypto domain ->
+                crypto range
+    | Let  : forall {t1 t2},
+                crypto t1 ->
+                (var t1 -> crypto t2) ->
+                crypto t2
+\end{verbatim}
+
+Currently there are some unfinished parts of the proofs and we can not demonstrate
+a complex example. When finished it would be possible to write statements like so:
+
+\begin{verbatim}
+example : (complexity algo1) = (complexity algo2)
+\end{verbatim}
+
+Where complexity is simply a recursive function that computes the complexity
+class of an algorithm.

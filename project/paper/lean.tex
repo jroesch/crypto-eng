@@ -1,6 +1,12 @@
 \section{Lean}
 
-Lean is a new theorem proving environment from Microsoft Research.
+Lean is a new theorem proving environment from Microsoft Research. It has
+been designed to be a modern, highly performant implementation by leveraging
+state of the art ideas in constraint solving and synthesis, as well as
+providing the flexibility to explore new ideas in type theory such as
+Homotopy Type Theory\cite{HoTTbook}.
+
+It key features are:\\
 \begin{itemize}
     \item powerful elaboration engine
     \item small trusted kernel
@@ -8,95 +14,78 @@ Lean is a new theorem proving environment from Microsoft Research.
     \item incremental compilation
     \item universe polymorphism
     \item mixed declarative and tactic proof style
-    \item powerful automation
+    \item powerful automation\\
 \end{itemize}
-
-The core ideas are:
-\begin{itemize}
-    \item type universes
-    \item function spaces
-    \item inductive types
-\end{itemize}
-
-\subsection{Type Theory}
-Type theory is a foundational framework for mathematics. It was an approach that evolved out of Russel's work on setting
-mathematics on a consistent foundational system for mathematics. The early 20th century was spent developing type theory
-as a proof system. The key insight was the Curry-Howard Isomorphism, which roughly states that types can be associated with
-propositions and proofs with programs. This insight was adapted and it became apparent that typed variants of the lambda
-calculus can be used as proof systems, the most widely used of which is Martin-Lof type theory. You can then view types in
-this typed lambda calculus as various features of constructive logic.
-
-If we begin with just an implicational fragment of logic we can use the simply typed lambda calculus which only has a
-single type constructor, the function type. This corresponds to implication. We can now view the typing judgment $a : A$
-as statement that a is a proof of A, and we can interpret the typing judgment $f : A -> B$ as a computational implication.
-At the type level it allows us to produce a B given an A, and computationally it gives us a method for transforming a program
-of A into a program of B. If we remember that program's correspond to proofs we now have a computational method for proving.
-
-We can of course extend our type system with richer features. We will quickly survey important additions to the Simply
-Typed Lambda Calculus that are needed to turn it into a dependently typed lambda calculus. The key idea is the erasure
-of phase distinction via the inclusion of a stratified type hierarchy, and Pi types.
-
-Traditionally we maintain a phase distinction where types and values live in separate universes. Dependent types
-are about easing this distinction. Type systems can usually be made more expressive by a series of additions.
-The simplest of which is the introduction of quantifiers which allow us to abstract over types with type lambdas.
-We can then introduce kinds (the types of types), and kind polymorphism which allow us to specify type shapes or (type arities).
-We can continue to enrich our kind and type system, eventually reflecting types as kinds, and values as types,
-but these systems are actually more complicated then a dependently typed calculi. Each of these refines become
-more and more complex because it requires the language to maintain a discipline between values, kinds, sorts.
-Dependent types simply introduce the idea of a Pi Type of dependent function space. This type system generalization is the
-idea that we can make everything much simpler by creating a stratified hierarchy of types, and adding Pi and Inductive types.
-We then can collapse our language into a simple set of pseudo terms, and typing rules which are easy to verify for correctness.
-
-We can then ignore all the complexity introduced by types systems such as System F and generalizations of it. Instead we can
-focus on a simple language. Usually a dependently typed core only requires a few forms abstraction, variables, function application,
-and Pi Types. This is simply the lambda calculus that everyone knows enriched with Pi types. It is also useful to extend the calculus
-with inductive types, or recursive data types that may be parametrized by the values they are constructed with.
-
-Pi Types can be simply viewed as a generalization of the traditional function type. The generalization
-allows the type of codomain to depend on value of the domain of the function. Given $B : P -> A; \Pi (x : A). B(x)$. This
-simple extension actually gives rise to a lot of power and will allow us to encode much of mathematics in type theory.
-
-This is of course a very brief overview and more information can be found in \cite{Pierce:TypeSystems} \cite{martinlof} and \cite{HoTTbook}.
 
 \subsection{Theorem Proving}
 
-Automated Theorem Proving has been an area of active research for many decades. It is apparent that the
-verification of general properties is desirable to both high assurance software engineers, researches, and
-mathematicians. There have been various approaches to Automated Theorem Proving in the past ACL2, NuPRL, LF,
-LCF, Coq, Agda. The ones based on dependent type theories seem the most promising for various reasons
-(computational, program extraction, proof carrying code, ect). Automated Theorem Proving has been applied in
-many areas from the NTSB, NASA, JPL, and a variety of other places.
+Theorem Proving has been an area of active research for many decades. It is
+apparent that the  verification of semantic properties are desirable for
+work in high assurance software systems, computer science and mathematics.
+There have been various approaches to Automated Theorem Proving in the past ACL2,
+NuPRL, LF, LCF, Coq, Agda, and Lean. The ones based on dependent type
+theories seem to be the most promising for various reasons:\\
 
-The current best way to leverage the proving power of Type Theory are Automated or Interactive Theorem Proving
-environments. These allow for the automatic satisfaction of some properties, and interactive proving of others.
-The state-of-the-art theorem proving environments in use for software verification are Coq, Agda, and Idris
-all of which provide the benefits of:
 \begin{itemize}
-    \item dependent types (equivalent to a fragment of isolationistic logic)
-    \item provides tools for automated proof search
-    \item specification and implementation are one and the same
-    \item executable "proofs" (i.e program extraction)
+    \item dependent types correspond to higher-order logic
+    \item tools for automated proof search and generation
+    \item specification and implementation happen in the same language
+    \item executable "proofs" (i.e program extraction)\\
 \end{itemize}
 
-These are all based on versions of intensional type theory. Coq is base on
-on Coquand and Huet's Theory of Constructions, and Agda is an evolution
-Martin-Lof Type Theory \cite{martinlof}.
+\subsection{Type Theory}
 
-Automated Theorem Proving has been an area of active research for many decades. It is apparent that the
-verification of general properties is desirable to both high assurance software engineers, researches, and
-mathematicians. There have been various approaches to Automated Theorem Proving in the past ACL2, NuPRL, LF,
-LCF, Coq, Agda. The ones based on dependent type theories seem the most promising for various reasons
-(computational, program extraction, proof carrying code, ect). Th current state-of-art is either based
-on Coquand and Huet's Theory of Constructions or the work done on Martin-Lof Type Theory \cite{martinlof}.
-Automated Theorem Proving has been applied in many areas from the NTSB, NASA, JPL, and a variety of other places.
+The programming language community has a long history with type theory, a
+computational proof theory that allows us to equate programs with proofs,
+and types with propositions.
 
-It appears that ideas from ATP could be very useful in the domain of hardware specification. Most
-specification is performed separately from the implementation and suffers the common
-problems of pen and paper proof. In many cases Embedded Domain Specific Languages (EDSLs)
-have been used as a way to gain the power of a proof assistant and also write proof carrying code\cite{Ricketts:2014}\cite{fesi}. We want
-to leverage the ideas here, but ideally built a separate front-end that exposes the full power of proving,
-but also allows one to provide both an usable interface that also generates useful proof properties for
-free \cite{Ricketts:2014}. \cite{chlipala2011certified} \cite{Pierce:SF}
+Type theory is at its core a foundational framework for mathematics. It was a
+school of thought that evolved out of Russel's work on foundational systems. One of the
+key insights in its developement and adoption was the Curry-Howard Isomorphism,å
+which states that types can be associated with propositions and proofs with programs.
+This allows one to write down a specification (a type) satisfy it with
+a program (a proof) and then execute the program for a result. Because
+of this type theory should be interesting to computer scientists, it means our
+foundations can simply be a programming language.
 
-There is a prototype implementation of ideas discussed in the final section available. It is currently
-written in Idris (which is one of the more practical dependently typed programming languages).
+Traditional programming languages have often treated types as a means of enforcing
+memory layout, like in C, but they can be much richer. Traditional type systems
+are very rigid and maintain a strict phase distinction; types and values
+live in separate universes. If we ease this restriction and freely allow programmers
+to intersperse types and values we end up dependent types, which happen to
+correspond to higher order logic. This is of course a very brief overview
+and more information can be found in \cite{Pierce:TypeSystems} \cite{martinlof}
+and \cite{HoTTbook}.
+
+From a theoretical perspective the majority of interesting mathematics and
+and verification can be formalized using a small set of features from dependent
+type theory:\\
+
+\begin{itemize}
+    \item type universes
+    \item dependent function spaces
+    \item inductive types\\
+\end{itemize}
+
+The key concept is that of a dependent function space or $\Pi$ type.
+A $\Pi$ type represents a function where the codomain is dependent on the value
+of the domain. Logically this means our propositions can be predicated on the
+value of their parameters. We can extend a lambda calculs with dependent functions
+with inductive types to have something powerful enough to implement a
+theorem proving environment and formalize large chunks of mathematics.
+
+Inductive types makes this possible; they define a type, a set of type formers
+(constructors) and an elimnator (or computation rule). We can use these to build
+up data types that represent data structures or proofs and compute based on them
+via eliminaton rules.
+
+Lean implements many other nice features by elaborating them to these simple
+core constructs. Lean's focus on engineering quality has made it an attractive
+choice for this project.
+
+% features. The first of which is type universes which allows us to resolve
+% soundness issues, in a dependently typed environment we must ask the question:
+% if we can use types as values what is the type of types? does the type of all types contain itself?
+% The astute reader will notice that this question is similar to Russel's Paradox.
+% We solve it much the same way by constructing an infinite hierarchy of universes
+% where each one contains all previous universes. T

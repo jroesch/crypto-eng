@@ -3,17 +3,27 @@
 Cryptographic algorithms and protocols are quickly becoming more prevelant,
 more special purpose, and more complex. In the face of this reasoning about their
 correctness is still not easy, and requires a combination of proof, testing,
-and peer review. Many of these essential algorithms are also key to our day to
-day lives and we require their implementations to not only be correct, but fast.
+and peer review. Many of these algorithms have also become essential to
+operation of services we rely on in our day to day lives, and we
+require their implementations to not only be correct, but fast to scale to
+real world use.
 
-The question then becomes how do give cryptographers tools to specify, verify,
-test and optimize their algorithms. Ideally we would like to increase the rigor
-of our verification and allow for the use of a machine proof checker.
+The question becomes: How do give cryptographers powerful tools to specify, verify,
+test and optimize algorithms? Traditionally each acitivity has required a different
+sets of tools that worked in isolation. Our goal in this paper is to introduce
+a framework that allows us to perform each activity with a single tool chain.
 
-The programming language community has a long history with type theory, a
-computational proof theory that allows us to equate programs with proofs,
-and types with propositions. Type theory allows one to write down a
-specification (a type) satisfy it with a program (a proof) and then execute
-the program for a result.
+We allow the user of our tool to write down executable specifications of
+their algorithms with boths proofs and examples as well as exposing machinery for
+automatically solving common proof obligations.
 
-Ours and many
+We can leverage the power of this approach in order to build our
+specification language. By embedding our language into the theorem prover Lean
+we gain all of its theorem proving power and capbilities. Lean is a good choice here because
+its foundational system is type theory, enabling us directly execute programs
+written in the framework. This is a well known technique for verifying
+computational domains, it is discussed in depth in section \ref{relatedwork}.
+
+We implement a embedded domain specific language inside of Lean built around
+the manipulation of depedently typed bit vectors, allowing us to verify
+the correctness of algorithms and extract an implementation.

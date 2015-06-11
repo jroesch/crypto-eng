@@ -1,1 +1,27 @@
 \section{Future Work}
+Our current framework is very bare bones and we would like to pursure a couple
+directions in the future:\\
+
+\begin{itemize}
+    \item hardware compiliation
+    \item proof automation
+    \item reasoning about complexity
+    \item optimization\\
+\end{itemize}
+
+I think that providing a tool kit for reasoning about optimization of algorithms
+and hardware generation will be the most interesting future directions. The current
+language is designed to be amendable to extraction to a hardware specification
+in a hardware description language, and the main challenge would just be getting
+the extraction implemented and proving correspondence between the high level
+algorithm and hardware.
+
+The other direction I see being useful is taking more inspiration from previous
+verification efforts and reasoning about the computational complexity of
+algorithms and being able to prove equivalence between optimized an unoptimized
+algorithmic approaches. This would most likely require a redesign of the core
+language in order to support this kind of reasoning.
+
+Constructing a verification framework requires a lot of experimentation and refinement
+to find the right tradeoff between complexity and simplicity in order to end
+up with a final product that is both ergnomic and expressive.

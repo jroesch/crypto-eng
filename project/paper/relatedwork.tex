@@ -1,1 +1,49 @@
-\section{Related Work}
+\section{Related Work} \label{relatedwork}
+Embedded domain specific languages are a core idea in programming languages and
+one that both our work and all prior work are inspired by. Embedded domain specific
+languages come in two primary flavors: shallow or deep. In a shallow embedding the
+language is directly translated from the domain specific language into the host language
+operations. In a deep embedding the language is used to construct an abstract
+syntax tree that represents the desired program that can then be interpreted in
+multiple ways, or compiled to another format.
+
+It is a common approach to build DSL in theorem proving environments as it allows
+one to encode a domain's semantics and verif various properties about the programs
+written in the DSL. There have been many different approaches to this from
+hardware description\cite{PicoCoq2013:POPL}\cite{fesi},
+reactive systems\cite{Ricketts:2014}, distributed systems,
+and cryptography.
+
+There have been many other approaches to verifying the correctness of cryptographic
+systems. The first attempt to build an embedded verification language is
+CertiCrypt \cite{Barthe:2012:POST}\cite{Zanella:2012:POPL}\cite{Barthe:2009:POPL}\cite{Barthe:2013:JCS}.
+
+CertiCrypt is a machine-checked framework built on top of Coq. Coq is
+an industry standard proof assistant that implements dependent type theory.
+CertiCrypt is a deep embedding of an extensible imperative probablistic
+programming language that allows one to describe both security goals
+and algorithms as probablistic programs. The framework also allows the
+characterization of adversaries as probablistic polynominal-time programs.
+
+EasyCrypt is an evolution of CertiCrypt in which they leverage tools such as
+SMT solvers in order to improve proof automation. After the release of EasyCrypt
+a team of cryptographers and programming language researchers attempted to prove
+security properties of a private information retreival system and were unable
+to write a complete proof due to limitations of the system. These fundamental
+limitations lead to the newest effort in this area: The Foundational Cryptography
+Framework\cite{DBLP:journals/corr/PetcherM14}.
+
+The primary difference is that they use a shallow embeding of the language
+instead of a deep emebedding. The shallow embedding means their constructs
+are interpreted into normal Coq expressions, which make the entire system more
+extensible and flexible.
+
+Our approach is less focused on formalization but providing a operational
+semantics to the langauge that allows for the translation and execution of
+real programs.
+
+In this way we are influenced by Cryptol\cite{cryptol2010} which is a domain specific language
+for specifying cryptographic algorithms, that can be extracted to either a
+code or hardware implementation. The langauge consists of bit vectors and
+functional style operations for transforming them, the goal is to have
+the Cryptol specifications closely resemble what cryptographers write on paper.

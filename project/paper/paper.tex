@@ -1,5 +1,6 @@
 \documentclass[twocolumn]{IEEEtran}
 \usepackage{epsfig}
+\usepackage{listings}
 %-----------------------
 
 \begin{document}
@@ -18,8 +19,8 @@
 We demonstrate a prototype framework for light weight reasoning about the
 correctness and performance of cryptographic algorithms. Our framework is informed
 by the state of the art in machine checked verfication, but goes beyond it in
-order to build a framework for the specification, verification, optimization,
-and execution of our algorithms ideally both in software and hardware.
+the pursuit of building a framework for the specification, verification, optimization,
+and execution of algorithms.
 \end{abstract}
 
 \input{introduction}
@@ -30,19 +31,6 @@ and execution of our algorithms ideally both in software and hardware.
 
 \bigskip
 \bigskip
-
-\centerline{\textbf{Figure 1:} Hardware realization of $(u-v)/2$.}
-\medskip
-\epsfxsize=3.1in
-\centerline{\epsffile{f1.eps}}
-
-\bigskip
-\bigskip
-
-\centerline{\textbf{Figure 2:} Hardware realization of $r+s$.}
-\medskip
-\epsfxsize=3.1in
-\centerline{\epsffile{f2.eps}}
 
 \bibliographystyle{IEEEbib}
 \bibliography{my}
